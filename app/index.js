@@ -2,6 +2,7 @@ var express = require('express'),
     debug = require('ghost-ignition').debug('app'),
     hbs = require('express-hbs'),
     multer = require('multer'),
+    path = require('path'),
     server = require('ghost-ignition').server,
     errors = require('ghost-ignition').errors,
     gscan = require('../lib'),
@@ -9,7 +10,20 @@ var express = require('express'),
     logRequest = require('./middlewares/log-request'),
     ghostVer = require('./ghost-version'),
     pkgJson = require('../package.json'),
-    upload = multer({dest: __dirname + '/uploads/'}),
+    upload = multer({
+        dest: __dirname + '/uploads/',
+        fileFilter: function (req, file, done) {
+            var filetypes = /zip/;
+            var mimetype = filetypes.test(file.mimetype);
+            var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+            if (mimetype && extname) {
+                return done(null, true);
+            }
+
+            done(new errors.UnsupportedMediaTypeError());
+        }
+    }),
     app = express(),
     scanHbs = hbs.create();
 
