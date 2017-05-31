@@ -5,7 +5,7 @@ var should = require('should'),
 
 describe('package.json', function () {
     it('should output error for missing package.json (theme example a)', function (done) {
-        utils.testCheck(thisCheck, 'example-a').then(function (output) {
+        utils.testCheck(thisCheck, 'is-empty').then(function (output) {
             output.should.be.a.ValidThemeObject();
 
             // Should auto pass valid rule
