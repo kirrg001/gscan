@@ -6,7 +6,7 @@ var should = require('should'),
 
 describe('Theme structure', function () {
     it('should fail all rules if no files present (theme example a)', function (done) {
-        utils.testCheck(thisCheck, 'is-empty').then(function (output) {
+        utils.testCheck(thisCheck, 'example-a').then(function (output) {
             output.should.be.a.ValidThemeObject();
 
             // Should not pass any rules
